@@ -1,0 +1,8 @@
+cron:
+- description: topics updater
+  url: /refresh
+  schedule: every 10 minutes
+  
+- description: forums updater
+  url: /refreshforums
+  schedule: every 24 hours

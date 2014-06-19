@@ -1,0 +1,99 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-ru" xml:lang="ru-ru">
+<head>
+    <title>
+    {% if theme_title %}
+        {{ theme_title }} - Другой ВелоэНск
+    {% else %}
+        Другой ВелоэНск - все о велосипедах и велотуризме в Новосибирске
+    {% endif %} 
+    </title>
+    <link rel="stylesheet" href="/styles/stylesheet.css" type="text/css" />
+    <link rel="icon" href="/styles/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="/scripts/tooltip.js"></script>
+</head>
+<body  class="ltr">
+    <div id="floatTip"></div>
+    <div id="logo-row">
+         <a href="/"><img src="/styles/logo.png" alt="" title="" style="float: left"/><h1>Другой ВелоэНск</h1></a><br/>
+        Всё о велосипедах и велотуризме в Новосибирске в удобной для чтения форме
+        <div id="logo-clear"></div>
+    </div>
+    <div class="navrow"></div>
+    <div id="content">
+        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="maintable" align="center">
+            <tr><td id="contentrow">
+                <table class="tablebg breadcrumb" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 5px;">
+                    <tr><td class="row1" style="font-size:10px">
+                        <p class="breadcrumbs">
+                            <a href="/">Список форумов</a>
+                            {% if cur_forum %}
+                                &#187; <a href="/{{cur_forum.forum_key}}/">{{cur_forum.forum_name}}</a>
+                            {% endif %} 
+                        </p>
+                        <div align=right>
+                            <form align=right method="get" name="jumpbox" action="/" onsubmit="if(document.jumpbox.f.value == -1){return false;}">
+                                <select name="forum" onchange="if(this.options[this.selectedIndex].value != -1){ document.location = '/'+this.options[this.selectedIndex].value+'/'}">
+                                    <option value="-1">Выберите форум</option>
+                                    <option value="-1">------------------</option>
+                                    {% for forum in forums %}
+                                        <option value="{{forum.forum_key}}">{{forum.forum_name}}</option>
+                                    {% endfor %}	
+                                </select>
+                                &nbsp;<input class="btnlite" type="submit" value="Перейти" />
+                            </form>
+                        </div>
+                    </td></tr>
+                </table>
+                <br />
+                <div id="pagecontent">
+                {% block content %}
+                    <div class="block-start">
+                        <div class="cap-div">
+                            <div class="cap-left">
+                                <div class="cap-right"><h1>{% if theme_title %} {{ theme_title }} {% else %} Форум {% endif %}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="tablebg" width="100%" cellspacing="0">
+                            <tr><th colspan=2>Форум</th>
+                                <th width="50">Темы</th>
+                                <th width="175">Последнее сообщение</th>
+                            </tr>
+                            {% for forum in forums %}
+                                <tr>
+                                    <td class="row1" width="31" align="center"><img src="/styles/forum_read.gif" width="25" height="27"/></td>
+                                    <td class="row1" style="font-size:12px">
+                                        <a class="forumlink" href="/{{forum.forum_key}}/">{{forum.forum_name}}</a>
+                                        {% if forum.forum_desc %}
+                                            <p class="forumdesc">{{forum.forum_desc}}</p>
+                                        {% endif %} 
+                                    </td>
+                                    <td class="row2" align="center"><p class="topicdetails">{{forum.forum_topics}}</p></td>
+                                    <td class="row2" align="center">
+                                        {% if forum.forum_last_post_id %}
+                                            <p class="topicdetails">{{forum.forum_last_poster_name}}</p>
+                                        {% else %}
+                                            <p class="topicdetails"> Нет сообщений </p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <div class="block-end-left">
+                            <div class="block-end-right"></div>
+                        </div>
+                    </div>
+                {% endblock content %}
+                </div>
+                <div align=right>
+                    <table border="0" valign="top"><tr>
+                    <td>
+                        <div align=right><!-- Yandex.Metrika informer --><a href="http://metrika.yandex.ru/stat/?id=9524659&amp;from=informer" target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/9524659/3_1_FFFFFFFF_EFEFEFFF_0_pageviews" style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" onclick="try{Ya.Metrika.informer({i:this,id:9524659,type:0,lang:\'ru\'});return false}catch(e){}"/></a><!-- /Yandex.Metrika informer --><!-- Yandex.Metrika counter --><div style="display:none;"><script type="text/javascript">(function(w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter9524659 = new Ya.Metrika({id:9524659, enableAll: true}); } catch(e) { } }); })(window, "yandex_metrika_callbacks");</script></div><script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script><noscript><div><img src="//mc.yandex.ru/watch/9524659" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter --></div>
+                    </td>
+                    </tr></table>
+                </div>
+            </td></tr>
+        </table>
+	</div>
+</body>
+</html>

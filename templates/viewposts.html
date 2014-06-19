@@ -1,0 +1,93 @@
+﻿{% extends "index.html" %}
+{% block content %}
+    <table width="100%" cellspacing="1"><tr>
+        <td class="gensmall" valign="middle" nowrap="nowrap">
+            &nbsp;Страница <strong>{{page_num}}</strong> из <strong>{{max_page_num}}</strong><br />
+        </td>
+        <td class="gensmall" nowrap="nowrap">
+            &nbsp;[ Сообщений: {{cur_topic.topic_true_posts}} ]&nbsp;
+        </td>
+        <td class="gensmall" width="100%" align="right" nowrap="nowrap">
+			{% if max_page_num>1 %}
+				{% for page in pages %}
+					{% if page.num==0 %}
+						<b>{{page.name}}</b>
+					{% else %}
+						<a href="/{{cur_topic.forum_key}}/{{cur_topic.topic_id}}/?p={{page.num}}">{{page.name}}</a>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+        </td>
+    </tr></table>
+    <div class="block-start">
+        <div class="cap-div">
+            <div class="cap-left">
+                <div class="cap-right"><h1>{{ cur_topic.topic_name|cutheader }}</h1>
+                </div>
+            </div>
+        </div>
+        <table class="tablebg" width="100%" cellspacing="0">
+            <tr><th colspan>Автор</th>
+                <th width=>Сообщение</th>
+            </tr>
+            {% for post in posts %}
+                <tr class="row1">
+                    {% if post.author_key %}
+                        <td valign=top align=center class="row"><div class="postauthor" onmouseover="AJAXTip('{{post.author_key}}')" onmouseout="toolTip()">{{post.author_name}}</div><div class="postdetails"></div></td>
+                    {% else %}
+                        <td valign=top align=center class="row"><div class="postauthor">{{post.author_name}}</div><div class="postdetails"></div></td>
+                    {% endif %}
+                    <td width="100%" height="25" class="row" valign="top">
+                        <div class="postbody">
+							{% if post.post_quote %}
+								<div class="bb-wrapper">
+									<table cellspacing="0" cellpadding="0" class="bb-table" width="100%">
+									<tr><td class="bb-content bb-quote" width="100%">
+										<div class="quotetitle">{{post.post_quote_author}} писал(а):
+										</div>
+										<div class="quotecontent">{{post.post_quote}}
+										</div>
+									</td></tr>
+									</table>
+								</div><br />							
+							{% endif %}
+                            {% if post.post_title %} 
+                                {% if post.post_text %}
+                                    <b>{{post.post_title}}</b>
+                                {% else %}
+                                    {{post.post_title}}
+                                {% endif %}
+                                <br />
+                            {% endif %}
+                            {{post.post_text}}                        
+                        </div><br clear="all" />
+                    </td>
+                </tr>
+                <tr class="row1"><td class="postbottom" align="center">{{post.post_date}}</td><td class="postbottom postbuttons" valign="middle"><div style="float: right"></div></td></tr>
+                <tr><td class="spacer" colspan="2" height="1"><img src="/images/spacer.gif" alt="" width="1" height="1" /></td></tr>
+            {% endfor %}
+        </table>
+        <div class="block-end-left">
+            <div class="block-end-right"></div>
+        </div>
+    </div>
+    <table width="100%" cellspacing="1"><tr>
+        <td class="gensmall" valign="middle" nowrap="nowrap">
+            &nbsp;Страница <strong>{{page_num}}</strong> из <strong>{{max_page_num}}</strong><br />
+        </td>
+        <td class="gensmall" nowrap="nowrap">
+            &nbsp;[ Сообщений: {{cur_topic.topic_true_posts}} ]&nbsp;
+        </td>
+        <td class="gensmall" width="100%" align="right" nowrap="nowrap">
+			{% if max_page_num>1 %}
+				{% for page in pages %}
+					{% if page.num==0 %}
+						<b>{{page.name}}</b>
+					{% else %}
+						<a href="/{{cur_topic.forum_key}}/{{cur_topic.topic_id}}/?p={{page.num}}">{{page.name}}</a>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+        </td>
+    </tr></table>	
+{% endblock %}

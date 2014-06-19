@@ -1,0 +1,70 @@
+﻿{% extends "index.html" %}
+{% block content %}
+    <table width="100%" cellspacing="1"><tr>
+        <td class="gensmall" valign="middle" nowrap="nowrap">
+            &nbsp;Страница <strong>{{page_num}}</strong> из <strong>{{max_page_num}}</strong><br />
+        </td>
+        <td class="gensmall" nowrap="nowrap">
+            &nbsp;[ Тем: {{cur_forum.forum_topics}} ]&nbsp;
+        </td>
+        <td class="gensmall" width="100%" align="right" nowrap="nowrap">
+			{% if max_page_num>1 %}
+				{% for page in pages %}
+					{% if page.num==0 %}
+						<b>{{page.name}}</b>
+					{% else %}
+						<a href="/{{cur_forum.forum_key}}/?p={{page.num}}">{{page.name}}</a>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+        </td>
+    </tr></table>
+    <div class="block-start">
+        <div class="cap-div">
+            <div class="cap-left">
+                <div class="cap-right"><h1>{{ cur_forum.forum_name }}</h1>
+                </div>
+            </div>
+        </div>
+        <table class="tablebg" width="100%" cellspacing="0">
+            <tr><th colspan=2>Темы</th>
+                <th width="130">Автор</th>
+                <th width="50">Ответы</th>
+                <th width="50">Просмотры</th>
+                <th width="140">Последнее сообщение</th>
+            </tr>
+            {% for topic in topics %}
+                <tr>
+                    <td class="row1" width="31" align="center"><img src="/styles/forum_read.gif" width="25" height="27"/></td>
+                    <td class="row1" style="font-size:12px">
+                        <a class="forumlink" href="/{{topic.forum_key}}/{{topic.topic_id}}/">{{topic.topic_name}}</a>
+						{% if topic.max_page_num > 1 %}
+							<p class="gensmall"> [ <img src="/styles/icon_topic_latest.gif" width="13" height="9" alt="На страницу" title="На страницу" />На страницу: 
+								{% for page in topic.pages %}
+									{% if page.num==0 %}
+										<b>{{page.name}}</b>
+									{% else %}
+										<a href="/{{topic.forum_key}}/{{topic.topic_id}}/?p={{page.num}}">{{page.name}}</a>
+									{% endif %}
+								{% endfor %}							
+							]</p>
+						{% endif %}
+                    </td>
+                    <td class="row2" align="center"><p class="topicauthor">{{topic.topic_starter_name}}</p><p class="topicdetails">{{topic.topic_start_date|timedelta}}</p></td>
+                    <td class="row2" align="center"><p class="topicdetails">{{topic.topic_true_posts}}</p></td>
+                    <td class="row2" align="center"><p class="topicdetails">{{topic.topic_views}}</p></td>
+                    <td class="row2" align="center" onmouseover="toolTip('{{topic.topic_last_post_title}}')" onmouseout="toolTip()">
+                        {% if topic.topic_last_poster_name %}
+                            <p class="topicauthor">{{topic.topic_last_poster_name}}</p><p class="topicdetails">{{topic.topic_last_post_date|timedelta}}</p>
+                        {% else %}
+                            <p class="topicdetails"> Нет сообщений </p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="block-end-left">
+            <div class="block-end-right"></div>
+        </div>
+    </div>
+{% endblock %}
